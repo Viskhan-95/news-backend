@@ -1,19 +1,19 @@
 const { default: mongoose } = require("mongoose");
 
 const commentSchema = mongoose.Schema({
-    user: {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: "User",
-        require: true,
-    },
     news: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: "News",
-        require: true,
+        required: true,
     },
-    comment: {
+    user: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    textComment: {
         type: String,
-        require: true
+        required: true
     }
 });
 

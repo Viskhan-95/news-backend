@@ -4,19 +4,20 @@ const newsSchema = mongoose.Schema({
     category: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Category",
-        require: true,
+        required: true,
     },
     news: {
         type: String,
-        require: true,
+        required: true,
     },
     author: {
         type: String,
-        require: true,
+        required: true,
     },
     dateOfCreation: {
-        String, //или Date?
-        require: true,
+        type: Date,
+        required: true,
+        timestamps: true,
     }
 });
 
