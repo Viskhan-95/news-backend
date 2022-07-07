@@ -21,6 +21,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    roles: {
+        type: String,
+        default: "user",
+    }
 });
 
 const User = mongoose.model("User", userSchema);

@@ -1,8 +1,8 @@
 const Comment = require("../models/Comments.model");
 
 module.exports.commentsController = {
-    fetchComments: async (req, res) => {
-        const { id } = req.body;
+    fetchComments: async (req, res) => {    //получаем комментарии к определенной новости
+        const { id } = req.params;
 
         try {
             const comments = await Comment.findById({news:id});
@@ -10,46 +10,45 @@ module.exports.commentsController = {
             res.json(comments);
 
         } catch (err) {
-            res.json ({
+            res.status(401).json ({
                 error: "ошибка при получении комментарий " + err.toString()
             });
         }
     },
-    createComment: async (req, res) => {
+    createComment: async (req, res) => {    //добавляем новость
         const { news } = req.body;
         const { textComment } = req.body;
-        const { user } = req.body;
 
         try {
             const comment = await Comment.create({
+                user: req.user.id,
                 news,
-                user,
                 textComment,
             });
 
             res.json(comment);
 
         } catch (err) {
-            res.json ({
+            res.status(401).json ({
                 error: "ошибка при создании комментарии " + err.toString()
             });
         }
     },
-    updateComment: async (req, res) => {
+    updateComment: async (req, res) => {    //изменяем определенную комментарию
         const { id } = req.params;
 
         try {
             await Comment.findByIdAndUpdate(id);
 
-            res.json("comment updated");
+            res.json("комментарий обновлен");
 
         } catch (err) {
-            res.json({
+            res.status(401).json({
                 error: "ошибка при обновлении комментарии " + err.toString()
             });
         }
     },
-    removeComment: async (req, res) => {
+    removeComment: async (req, res) => {    // удаляем определенный комментарий
         const { id } = req.params;
         
         try {
@@ -59,10 +58,10 @@ module.exports.commentsController = {
                 await comment.remove();
             }
 
-            res.json("comment deleted")
+            res.json("комментарий удален")
 
         } catch (err) {
-            res.json({
+            res.status(401).json({
                 error: "ошибка при удалении комментарии " + err.toString()
             });
         }

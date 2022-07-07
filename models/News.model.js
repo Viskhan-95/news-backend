@@ -6,18 +6,19 @@ const newsSchema = mongoose.Schema({
         ref: "Category",
         required: true,
     },
-    news: {
-        type: String,
+    author: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: "User",
         required: true,
     },
-    author: {
+    textNews: {
         type: String,
         required: true,
     },
     dateOfCreation: {
         type: Date,
-        required: true,
         timestamps: true,
+        required: true,
     }
 });
 

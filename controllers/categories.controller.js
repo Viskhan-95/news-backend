@@ -8,13 +8,13 @@ module.exports.categoriesController = {
             res.json(categories);
 
         } catch (err) {
-            res.json({
+            res.status(401).json({
                 error: "ошибка при получении категорий " + err.toString()
             });
         }
     },
     createCategory: async (req, res) => {
-        const { nameCategory } = req.body.nameCategory;
+        const { nameCategory } = req.body;
         
         try {
             const category = await Categories.create({
@@ -24,7 +24,7 @@ module.exports.categoriesController = {
             res.json(category);
 
         } catch (err) {
-            res.json({
+            res.status(401).json({
                 error: "ошибка при создании категории " + err.toString()
             });
         }
@@ -38,10 +38,10 @@ module.exports.categoriesController = {
                 nameCategory,
             });
             
-            res.json("category updated");
+            res.json("категория обновлена");
 
         } catch (err) {
-            res.json({
+            res.status(401).json({
                 error: "ошибка при обновлении категории " + err.toString()
             });
         }
@@ -52,10 +52,10 @@ module.exports.categoriesController = {
         try {
             await Categories.findByIdAndRemove(id);
            
-            res.json("category deleted");
+            res.json("категория удалена");
 
         } catch (err) {
-            res.json({
+            res.status(401).json({
                 error: "ошибка при удалении категории " + err.toString()
             });
         }
