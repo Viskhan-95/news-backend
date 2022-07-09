@@ -15,13 +15,14 @@ module.exports.newsController = {
             });
         }
     },
-    createNews: async (req, res) => {      //создаем новость (новость может создать только автор или администратор)
+    createNews: async (req, res) => {      //создаем новость (новость может создать только автор)
         const { category } = req.body;
+        const { author } = req.body;
         const { textNews } = req.body;
 
         try{
             const news = await News.create({
-                author: req.user.id,
+                author,
                 category,
                 textNews,
             });

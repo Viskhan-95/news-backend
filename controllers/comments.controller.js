@@ -1,4 +1,4 @@
-const Comment = require("../models/Comments.model");
+const Comment = require("../models/Comment.model");
 
 module.exports.commentsController = {
     fetchComments: async (req, res) => {    //получаем комментарии к определенной новости
@@ -22,6 +22,7 @@ module.exports.commentsController = {
         try {
             const comment = await Comment.create({
                 user: req.user.id,
+                roles: req.user.roles,
                 news,
                 textComment,
             });

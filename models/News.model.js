@@ -1,20 +1,25 @@
-const { default: mongoose } = require("mongoose");
+const { Schema, SchemaTypes, model }  = require("mongoose");
 
-const newsSchema = mongoose.Schema({
+const newsSchema = Schema({
     category: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: SchemaTypes.ObjectId,
         ref: "Category",
         required: true,
     },
     author: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: SchemaTypes.ObjectId,
         ref: "User",
+        required: true,
+    },
+    headerNews: {
+        type: String,
         required: true,
     },
     textNews: {
         type: String,
         required: true,
     },
+    image: String,
     dateOfCreation: {
         type: Date,
         timestamps: true,
@@ -22,6 +27,6 @@ const newsSchema = mongoose.Schema({
     }
 });
 
-const News = mongoose.model("News", newsSchema);
+const News = model("News", newsSchema);
 
 module.exports = News;

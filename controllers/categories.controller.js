@@ -1,7 +1,7 @@
 const Categories = require("../models/Category.model");
 
 module.exports.categoriesController = {
-    fetchCategories: async (req, res) => {
+    fetchCategories: async (req, res) => { // получаем все категории
         try {
             const categories = await Categories.find();
             
@@ -13,7 +13,7 @@ module.exports.categoriesController = {
             });
         }
     },
-    createCategory: async (req, res) => {
+    createCategory: async (req, res) => {   // создаем категорию
         const { nameCategory } = req.body;
         
         try {
@@ -29,7 +29,7 @@ module.exports.categoriesController = {
             });
         }
     },
-    updateCategory: async (req, res) => {
+    updateCategory: async (req, res) => {   // изменяем категорию
         const { id } = req.params;
         const { nameCategory } = req.body;
 
@@ -46,7 +46,7 @@ module.exports.categoriesController = {
             });
         }
     },
-    removeCategory: async (req, res) => {
+    removeCategory: async (req, res) => {   // удаляем категорию
         const { id } = req.params;
 
         try {
