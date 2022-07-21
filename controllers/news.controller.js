@@ -5,7 +5,7 @@ module.exports.newsController = {
         const { id } = req.params;
 
         try {
-            const news = await News.find({category: id});
+            const news = await News.find().populate("author");
 
             res.json(news);
 
@@ -16,18 +16,19 @@ module.exports.newsController = {
         }
     },
     createNews: async (req, res) => {      //создаем новость (новость может создать только автор)
-        const { category } = req.body;
-        const { author } = req.body;
-        const { textNews } = req.body;
+        const { headerNews, textNews, } = req.body;
+        const { id } = req.params;
+        const author = req.user.id;
 
-        try{
+        try {
             const news = await News.create({
-                author,
-                category,
+                category: id,
+                headerNews,
                 textNews,
+                imageName: req.file.path,
+                author: author,
             });
-
-            res.json(news);
+            res.json({news});
 
         } catch (err) {
             res.json({
@@ -35,11 +36,20 @@ module.exports.newsController = {
             });
         }
     },
-    updateNews: async (req, res) => {   //обновление новости (новость может обновить только автор или администратор)
+    updateNews: async (req, res) => {   //обновление новости (новость может обновить только автор)
+        const { category, headerNews, textNews, imageName } = req.body;
         const { id } = req.params;
+        const author = req.user.role;
 
         try {
-            await News.findOneAndUpdate(id);
+            await News.findOneAndUpdate(id, {
+                category,
+                headerNews,
+                textNews,
+                imageName,
+                author,
+                dateOfCreation: Date.now
+            });
 
             res.json("новость обновлена")
 
@@ -58,7 +68,7 @@ module.exports.newsController = {
             res.status(401).json({
                 error: "ошибка при удалении новости " + err.toString()
             });
-            
+
         } catch (err) {
             res.status(401).json({
                 error: "ошибка при удалении новости " + err.toString()

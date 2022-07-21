@@ -6,6 +6,9 @@ const cors = require("cors");
 
 const app = express();
 
+app.use('/categories', express.static(__dirname + '/public/categories'));
+app.use('/tehnology', express.static(__dirname + '/public/tehnology'));
+
 app.use(cors());
 app.use(express.json());
 app.use(require("./routes"));

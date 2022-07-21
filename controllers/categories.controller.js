@@ -14,11 +14,13 @@ module.exports.categoriesController = {
         }
     },
     createCategory: async (req, res) => {   // создаем категорию
-        const { nameCategory } = req.body;
+        const { nameCategory, aboutCategory, nameStaticImage } = req.body;
         
         try {
             const category = await Categories.create({
                 nameCategory,
+                aboutCategory,
+                nameStaticImage,
             })
             
             res.json(category);
@@ -31,11 +33,13 @@ module.exports.categoriesController = {
     },
     updateCategory: async (req, res) => {   // изменяем категорию
         const { id } = req.params;
-        const { nameCategory } = req.body;
+        const { nameCategory, aboutCategory, nameStaticImage } = req.body;
 
         try {
             await Categories.findByIdAndUpdate(id, {
                 nameCategory,
+                aboutCategory,
+                nameStaticImage,
             });
             
             res.json("категория обновлена");

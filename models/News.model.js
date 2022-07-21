@@ -19,10 +19,10 @@ const newsSchema = Schema({
         type: String,
         required: true,
     },
-    image: String,
+    imageName: String,
     dateOfCreation: {
         type: Date,
-        timestamps: true,
+        default: Date.now,
         required: true,
     }
 });

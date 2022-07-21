@@ -30,7 +30,7 @@ module.exports.usersController = {
             const candidate = await User.findOne({ login });
 
             if (candidate) {
-                return res.status(400).json("логин уже занят");
+                return res.status(400).json({error:"логин уже занят"});
             }
 
             const hash = await bcrypt.hash(password, Number(process.env.BCRYPT_ROUNDS));
@@ -90,7 +90,7 @@ module.exports.usersController = {
 
     updateUser: async (req, res) => { // обновление данных пациента
         try {
-            const { lastName, firstName, email, login, password, role } = req.body;
+            const { firstName, lastName, email, login, password, role } = req.body;
             const { id } = req.params;
             const hash = await bcrypt.hash(password, Number(process.env.BCRYPT_ROUNDS));
 
